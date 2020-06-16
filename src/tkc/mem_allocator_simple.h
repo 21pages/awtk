@@ -47,9 +47,8 @@ typedef struct _mem_allocator_simple_t {
 
 #define MEM_ALLOCATOR_SIMPLE(allocator) ((mem_allocator_simple_t*)(allocator))
 
-#define R8B(size) (((size + 7) >> 3) << 3)
-#define MIN_SIZE R8B(sizeof(free_node_t))
-#define REAL_SIZE(size) R8B((size > sizeof(free_node_t) ? size : MIN_SIZE) + sizeof(uint32_t));
+#define MIN_SIZE TK_ROUND_TO8(sizeof(free_node_t))
+#define REAL_SIZE(size) TK_ROUND_TO8((size > sizeof(free_node_t) ? size : MIN_SIZE) + sizeof(uint32_t));
 
 static void* tk_alloc_impl(mem_allocator_t*allocator, uint32_t s) {
   mem_info_t* info = &(MEM_ALLOCATOR_SIMPLE(allocator)->info);
@@ -238,18 +237,6 @@ static inline void* mem_allocator_simple_alloc(mem_allocator_t* allocator, uint3
   return tk_alloc_impl(allocator, size);
 }
 
-static inline void* mem_allocator_simple_calloc(mem_allocator_t* allocator, uint32_t nmemb, uint32_t size, const char* func, uint32_t line) {
-  void* ptr = NULL;
-  size = nmemb * size;
-  ptr = tk_alloc_impl(allocator, size);
-
-  if (ptr != NULL) {
-    memset(ptr, 0x00, size);
-  }
-
-  return ptr;
-}
-
 static inline void* mem_allocator_simple_realloc(mem_allocator_t* allocator, void* ptr, uint32_t size, const char* func, uint32_t line) {
   return tk_realloc_impl(allocator, ptr, size);
 }
@@ -271,7 +258,6 @@ static inline ret_t mem_allocator_simple_destroy(mem_allocator_t* allocator) {
 
 static const mem_allocator_vtable_t s_mem_allocator_simple_vtable = {
   .alloc = mem_allocator_simple_alloc,
-  .calloc = mem_allocator_simple_calloc,
   .realloc = mem_allocator_simple_realloc,
   .free = mem_allocator_simple_free,
   .dump = mem_allocator_simple_dump,

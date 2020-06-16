@@ -49,19 +49,6 @@ static inline void* mem_allocator_lock_alloc(mem_allocator_t* allocator, uint32_
   return addr;
 }
 
-static inline void* mem_allocator_lock_calloc(mem_allocator_t* allocator, uint32_t nmemb, uint32_t size, const char* func, uint32_t line) {
-  void* addr = NULL;
-  tk_mutex_t* mutex = MEM_ALLOCATOR_LOCK(allocator)->mutex;
-  mem_allocator_t* impl = MEM_ALLOCATOR_LOCK(allocator)->impl;
-
-  if(tk_mutex_lock(mutex) == RET_OK) {
-    addr = mem_allocator_calloc(impl, nmemb, size, func, line);
-    ENSURE(tk_mutex_unlock(mutex) == RET_OK);
-  }
-
-  return addr;
-}
-
 static inline void* mem_allocator_lock_realloc(mem_allocator_t* allocator, void* ptr, uint32_t size, const char* func, uint32_t line) {
   void* addr = NULL;
   tk_mutex_t* mutex = MEM_ALLOCATOR_LOCK(allocator)->mutex;
@@ -110,7 +97,6 @@ static inline ret_t mem_allocator_lock_destroy(mem_allocator_t* allocator) {
 
 static const mem_allocator_vtable_t s_mem_allocator_lock_vtable = {
   .alloc = mem_allocator_lock_alloc,
-  .calloc = mem_allocator_lock_calloc,
   .realloc = mem_allocator_lock_realloc,
   .free = mem_allocator_lock_free,
   .dump = mem_allocator_lock_dump,

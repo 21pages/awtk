@@ -71,23 +71,6 @@ static inline void* mem_allocator_oom_alloc(mem_allocator_t* allocator, uint32_t
   return addr;
 }
 
-static inline void* mem_allocator_oom_calloc(mem_allocator_t* allocator, uint32_t nmemb, uint32_t size, const char* func, uint32_t line) {
-  void* addr = NULL;
-  uint32_t tried_times = 0;
-  mem_allocator_t* impl = MEM_ALLOCATOR_OOM(allocator)->impl;
-
-  do {
-    addr = mem_allocator_calloc(impl, nmemb, size, func, line);
-    if (addr != NULL) {
-      break;
-    }
-
-    tk_mem_on_out_of_memory(++tried_times, nmemb * size);
-  } while (tried_times < TRY_MAX_TIMES);
-
-  return addr;
-}
-
 static inline void* mem_allocator_oom_realloc(mem_allocator_t* allocator, void* ptr, uint32_t size, const char* func, uint32_t line) {
   void* addr = NULL;
   uint32_t tried_times = 0;
@@ -128,7 +111,6 @@ static inline ret_t mem_allocator_oom_destroy(mem_allocator_t* allocator) {
 
 static const mem_allocator_vtable_t s_mem_allocator_oom_vtable = {
   .alloc = mem_allocator_oom_alloc,
-  .calloc = mem_allocator_oom_calloc,
   .realloc = mem_allocator_oom_realloc,
   .free = mem_allocator_oom_free,
   .dump = mem_allocator_oom_dump,

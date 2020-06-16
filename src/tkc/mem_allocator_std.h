@@ -32,10 +32,6 @@ static inline void* mem_allocator_std_alloc(mem_allocator_t* allocator, uint32_t
   return malloc(size);
 }
 
-static inline void* mem_allocator_std_calloc(mem_allocator_t* allocator, uint32_t nmemb, uint32_t size, const char* func, uint32_t line) {
-  return calloc(nmemb, size);
-}
-
 static inline void* mem_allocator_std_realloc(mem_allocator_t* allocator, void* ptr, uint32_t size, const char* func, uint32_t line) {
   return realloc(ptr, size);
 }
@@ -55,7 +51,6 @@ static inline ret_t mem_allocator_std_destroy(mem_allocator_t* allocator) {
 
 static const mem_allocator_vtable_t s_mem_allocator_std_vtable = {
   .alloc = mem_allocator_std_alloc,
-  .calloc = mem_allocator_std_calloc,
   .realloc = mem_allocator_std_realloc,
   .free = mem_allocator_std_free,
   .dump = mem_allocator_std_dump,

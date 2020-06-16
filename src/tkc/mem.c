@@ -22,6 +22,7 @@
 #include "tkc/mem.h"
 #include "tkc/time_now.h"
 #include "tkc/mem_allocator_oom.h"
+#include "tkc/mem_allocator_pool.h"
 
 #ifdef ENABLE_MEM_LEAK_CHECK
 #include "tkc/mem_allocator_debug.h"
@@ -89,10 +90,16 @@ void* realloc(void* ptr, size_t size) {
 #endif /*HAS_STD_MALLOC*/
 
 void* tk_calloc(uint32_t nmemb, uint32_t size, const char* func, uint32_t line) {
+  void* addr = NULL;
+  uint32_t total_size = size * nmemb;
   mem_allocator_t* allocator = mem_allocator_get();
   return_value_if_fail(allocator != NULL, NULL);
 
-  return mem_allocator_calloc(allocator, nmemb, size, func, line);
+  addr = mem_allocator_alloc(allocator, total_size, func, line);
+  return_value_if_fail(addr != NULL, NULL);
+  memset(addr, 0x00, total_size);
+
+  return addr;
 }
 
 void* tk_realloc(void* ptr, uint32_t size, const char* func, uint32_t line) {

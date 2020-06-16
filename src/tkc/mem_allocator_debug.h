@@ -136,18 +136,6 @@ static inline void* mem_allocator_debug_alloc(mem_allocator_t* allocator, uint32
   return addr;
 }
 
-static inline void* mem_allocator_debug_calloc(mem_allocator_t* allocator, uint32_t nmemb, uint32_t size, const char* func, uint32_t line) {
-  void* addr = NULL;
-  mem_allocator_t* impl = MEM_ALLOCATOR_DEBUG(allocator)->impl;
-
-  addr = mem_allocator_calloc(impl, nmemb, size, func, line);
-  if (addr != NULL) {
-    mem_entry_add(addr, size, func, line);
-  }
-
-  return addr;
-}
-
 static inline void* mem_allocator_debug_realloc(mem_allocator_t* allocator, void* ptr, uint32_t size, const char* func, uint32_t line) {
   void* addr = NULL;
   mem_allocator_t* impl = MEM_ALLOCATOR_DEBUG(allocator)->impl;
@@ -187,7 +175,6 @@ static inline ret_t mem_allocator_debug_destroy(mem_allocator_t* allocator) {
 
 static const mem_allocator_vtable_t s_mem_allocator_debug_vtable = {
   .alloc = mem_allocator_debug_alloc,
-  .calloc = mem_allocator_debug_calloc,
   .realloc = mem_allocator_debug_realloc,
   .free = mem_allocator_debug_free,
   .dump = mem_allocator_debug_dump,
