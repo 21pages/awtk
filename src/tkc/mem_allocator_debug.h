@@ -119,7 +119,7 @@ static inline void mem_entry_dump(void) {
       } else if (iter->size >= 102400) {
         geq102400++;
       }
-      log_debug("%p %u %s:%u\n", iter->addr, iter->size, iter->func, iter->size);
+      log_debug("%p %u %s:%u\n", iter->addr, iter->size, iter->func, iter->line);
     }
   }
 
