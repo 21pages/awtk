@@ -28,11 +28,13 @@ BEGIN_C_DECLS
 
 #define MEM_ALLOCATOR_STD(allocator) ((mem_allocator_std_t*)(allocator))
 
-static inline void* mem_allocator_std_alloc(mem_allocator_t* allocator, uint32_t size, const char* func, uint32_t line) {
+static inline void* mem_allocator_std_alloc(mem_allocator_t* allocator, uint32_t size,
+                                            const char* func, uint32_t line) {
   return malloc(size);
 }
 
-static inline void* mem_allocator_std_realloc(mem_allocator_t* allocator, void* ptr, uint32_t size, const char* func, uint32_t line) {
+static inline void* mem_allocator_std_realloc(mem_allocator_t* allocator, void* ptr, uint32_t size,
+                                              const char* func, uint32_t line) {
   return realloc(ptr, size);
 }
 
@@ -50,22 +52,19 @@ static inline ret_t mem_allocator_std_destroy(mem_allocator_t* allocator) {
 }
 
 static const mem_allocator_vtable_t s_mem_allocator_std_vtable = {
-  .alloc = mem_allocator_std_alloc,
-  .realloc = mem_allocator_std_realloc,
-  .free = mem_allocator_std_free,
-  .dump = mem_allocator_std_dump,
-  .destroy = mem_allocator_std_destroy
-};
+    .alloc = mem_allocator_std_alloc,
+    .realloc = mem_allocator_std_realloc,
+    .free = mem_allocator_std_free,
+    .dump = mem_allocator_std_dump,
+    .destroy = mem_allocator_std_destroy};
 
-static inline mem_allocator_t* mem_allocator_std_create(void) {
-  static mem_allocator_t s_mem_allocator = {
-    .vt = &s_mem_allocator_std_vtable
-  };
- 
-  return &s_mem_allocator;
+static inline mem_allocator_t* mem_allocator_std_init(mem_allocator_t* allocator) {
+  return_value_if_fail(allocator != NULL, NULL);
+  allocator->vt = &s_mem_allocator_std_vtable;
+
+  return allocator;
 }
 
 END_C_DECLS
 
 #endif /*TK_MEM_ALLOCATOR_STD_H*/
-

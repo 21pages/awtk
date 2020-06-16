@@ -29,7 +29,7 @@ BEGIN_C_DECLS
 typedef struct _mem_allocator_oom_t {
   mem_allocator_t allocator;
   mem_allocator_t* impl;
-}mem_allocator_oom_t;
+} mem_allocator_oom_t;
 
 #define MEM_ALLOCATOR_OOM(allocator) ((mem_allocator_oom_t*)(allocator))
 
@@ -53,8 +53,8 @@ ret_t tk_mem_set_on_out_of_memory(tk_mem_on_out_of_memory_t on_out_of_memory, vo
   return RET_OK;
 }
 
-
-static inline void* mem_allocator_oom_alloc(mem_allocator_t* allocator, uint32_t size, const char* func, uint32_t line) {
+static inline void* mem_allocator_oom_alloc(mem_allocator_t* allocator, uint32_t size,
+                                            const char* func, uint32_t line) {
   void* addr = NULL;
   uint32_t tried_times = 0;
   mem_allocator_t* impl = MEM_ALLOCATOR_OOM(allocator)->impl;
@@ -71,7 +71,8 @@ static inline void* mem_allocator_oom_alloc(mem_allocator_t* allocator, uint32_t
   return addr;
 }
 
-static inline void* mem_allocator_oom_realloc(mem_allocator_t* allocator, void* ptr, uint32_t size, const char* func, uint32_t line) {
+static inline void* mem_allocator_oom_realloc(mem_allocator_t* allocator, void* ptr, uint32_t size,
+                                              const char* func, uint32_t line) {
   void* addr = NULL;
   uint32_t tried_times = 0;
   mem_allocator_t* impl = MEM_ALLOCATOR_OOM(allocator)->impl;
@@ -110,21 +111,20 @@ static inline ret_t mem_allocator_oom_destroy(mem_allocator_t* allocator) {
 }
 
 static const mem_allocator_vtable_t s_mem_allocator_oom_vtable = {
-  .alloc = mem_allocator_oom_alloc,
-  .realloc = mem_allocator_oom_realloc,
-  .free = mem_allocator_oom_free,
-  .dump = mem_allocator_oom_dump,
-  .destroy = mem_allocator_oom_destroy
-};
+    .alloc = mem_allocator_oom_alloc,
+    .realloc = mem_allocator_oom_realloc,
+    .free = mem_allocator_oom_free,
+    .dump = mem_allocator_oom_dump,
+    .destroy = mem_allocator_oom_destroy};
 
-static inline mem_allocator_t* mem_allocator_oom_create(mem_allocator_t* impl) {
-  static mem_allocator_oom_t s_mem_allocator;
-  mem_allocator_t* allocator = MEM_ALLOCATOR(&s_mem_allocator);
-  return_value_if_fail(impl != NULL, NULL);
+static inline mem_allocator_t* mem_allocator_oom_init(mem_allocator_oom_t* oom,
+                                                      mem_allocator_t* impl) {
+  mem_allocator_t* allocator = MEM_ALLOCATOR(oom);
+  return_value_if_fail(impl != NULL && oom != NULL, NULL);
 
-  memset(&s_mem_allocator, 0x00, sizeof(&s_mem_allocator));
+  memset(oom, 0x00, sizeof(*oom));
   allocator->vt = &s_mem_allocator_oom_vtable;
-  s_mem_allocator.impl = impl;
+  oom->impl = impl;
 
   return allocator;
 }
@@ -132,4 +132,3 @@ static inline mem_allocator_t* mem_allocator_oom_create(mem_allocator_t* impl) {
 END_C_DECLS
 
 #endif /*TK_MEM_ALLOCATOR_OOM_H*/
-

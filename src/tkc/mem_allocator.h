@@ -29,8 +29,10 @@ BEGIN_C_DECLS
 struct _mem_allocator_t;
 typedef struct _mem_allocator_t mem_allocator_t;
 
-typedef void* (*mem_allocator_alloc_t)(mem_allocator_t* allocator, uint32_t size, const char* func, uint32_t line);
-typedef void* (*mem_allocator_realloc_t)(mem_allocator_t* allocator, void* ptr, uint32_t size, const char* func, uint32_t line);
+typedef void* (*mem_allocator_alloc_t)(mem_allocator_t* allocator, uint32_t size, const char* func,
+                                       uint32_t line);
+typedef void* (*mem_allocator_realloc_t)(mem_allocator_t* allocator, void* ptr, uint32_t size,
+                                         const char* func, uint32_t line);
 typedef void (*mem_allocator_free_t)(mem_allocator_t* allocator, void* ptr);
 typedef ret_t (*mem_allocator_dump_t)(mem_allocator_t* allocator);
 typedef ret_t (*mem_allocator_destroy_t)(mem_allocator_t* allocator);
@@ -63,8 +65,10 @@ struct _mem_allocator_t {
  *
  * @return {void*} 成功返回内存块的地址，失败返回NULL。
  */
-static inline void* mem_allocator_alloc(mem_allocator_t* allocator, uint32_t size, const char* func, uint32_t line) {
-  return_value_if_fail(allocator != NULL && allocator->vt != NULL && allocator->vt->alloc != NULL, NULL);
+static inline void* mem_allocator_alloc(mem_allocator_t* allocator, uint32_t size, const char* func,
+                                        uint32_t line) {
+  return_value_if_fail(allocator != NULL && allocator->vt != NULL && allocator->vt->alloc != NULL,
+                       NULL);
 
   return allocator->vt->alloc(allocator, size, func, line);
 }
@@ -81,8 +85,10 @@ static inline void* mem_allocator_alloc(mem_allocator_t* allocator, uint32_t siz
  *
  * @return {void*} 成功返回内存块的地址，失败返回NULL。
  */
-static inline void* mem_allocator_realloc(mem_allocator_t* allocator, void* ptr, uint32_t size, const char* func, uint32_t line) {
-  return_value_if_fail(allocator != NULL && allocator->vt != NULL && allocator->vt->realloc!= NULL, NULL);
+static inline void* mem_allocator_realloc(mem_allocator_t* allocator, void* ptr, uint32_t size,
+                                          const char* func, uint32_t line) {
+  return_value_if_fail(allocator != NULL && allocator->vt != NULL && allocator->vt->realloc != NULL,
+                       NULL);
 
   return allocator->vt->realloc(allocator, ptr, size, func, line);
 }
@@ -111,7 +117,8 @@ static inline void mem_allocator_free(mem_allocator_t* allocator, void* ptr) {
  * @return {ret_t} 返回RET_OK表示成功，否则表示失败。
  */
 static inline ret_t mem_allocator_dump(mem_allocator_t* allocator) {
-  return_value_if_fail(allocator != NULL && allocator->vt != NULL && allocator->vt->dump != NULL, RET_BAD_PARAMS);
+  return_value_if_fail(allocator != NULL && allocator->vt != NULL && allocator->vt->dump != NULL,
+                       RET_BAD_PARAMS);
 
   return allocator->vt->dump(allocator);
 }
@@ -125,7 +132,8 @@ static inline ret_t mem_allocator_dump(mem_allocator_t* allocator) {
  * @return {ret_t} 返回RET_OK表示成功，否则表示失败。
  */
 static inline ret_t mem_allocator_destroy(mem_allocator_t* allocator) {
-  return_value_if_fail(allocator != NULL && allocator->vt != NULL && allocator->vt->destroy != NULL, RET_BAD_PARAMS);
+  return_value_if_fail(allocator != NULL && allocator->vt != NULL && allocator->vt->destroy != NULL,
+                       RET_BAD_PARAMS);
 
   return allocator->vt->destroy(allocator);
 }
