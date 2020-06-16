@@ -45,7 +45,7 @@ static uint32_t mem_pool_get_bits_size(uint8_t block_nr) {
   return (block_nr / 32 + 2) & 0xfffffffe;
 }
 
-static uint32_t mem_pool_get_min_size(uint8_t block_size, uint8_t block_nr) {
+static uint32_t mem_pool_get_min_size(uint8_t block_size, uint32_t block_nr) {
   uint32_t bits_size = mem_pool_get_bits_size(block_nr);
   uint32_t head_size = sizeof(mem_pool_t);
   return head_size + bits_size * sizeof(uint32_t) + block_nr * block_size;

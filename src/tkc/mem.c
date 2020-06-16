@@ -26,7 +26,7 @@
 
 static mem_allocator_oom_t s_oom;
 static mem_allocator_pool_t s_pool;
-#undef ENABLE_MEM_LEAK_CHECK
+
 #ifdef ENABLE_MEM_LEAK_CHECK
 #include "tkc/mem_allocator_debug.h"
 static mem_allocator_debug_t s_debug;
@@ -61,6 +61,7 @@ static mem_allocator_t* mem_allocator_get(void) {
 static mem_allocator_lock_t s_lock;
 ret_t tk_mem_init(void* buffer, uint32_t size) {
   static mem_allocator_simple_t simple;
+  static mem_allocator_pool_t pool;
 
   s_allocator = mem_allocator_simple_init(&simple, buffer, size);
   s_allocator = mem_allocator_oom_init(&s_oom, s_allocator);
@@ -68,6 +69,7 @@ ret_t tk_mem_init(void* buffer, uint32_t size) {
 #ifdef ENABLE_MEM_LEAK_CHECK
   s_allocator = mem_allocator_debug_init(&s_debug, s_allocator);
 #endif /*ENABLE_MEM_LEAK_CHECK*/
+  s_allocator = mem_allocator_pool_init(&pool, s_allocator, 1000, 1000, 1000, 500, 500);
 
   return s_allocator != NULL ? RET_OK : RET_FAIL;
 }

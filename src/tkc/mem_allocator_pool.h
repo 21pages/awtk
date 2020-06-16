@@ -92,49 +92,66 @@ static inline void* mem_allocator_pool_realloc(mem_allocator_t* allocator, void*
   mem_allocator_t* impl = MEM_ALLOCATOR_POOL(allocator)->impl;
 
   if (ptr != NULL && mem_pool_get_index(pool8, ptr) >= 0) {
-    if (size <= 8) {
+    if (size <= pool8->block_size) {
       return ptr;
     } else {
+      addr = mem_allocator_pool_alloc(allocator, size, func, line);
+      return_value_if_fail(addr != NULL, NULL);
+      memcpy(addr, ptr, pool8->block_size);
       mem_pool_put(pool8, ptr);
-      ptr = NULL;
+      return addr;
+    }
+  }
+  
+  if (ptr != NULL && mem_pool_get_index(pool16, ptr) >= 0) {
+    if (size <= pool16->block_size) {
+      return ptr;
+    } else {
+      addr = mem_allocator_pool_alloc(allocator, size, func, line);
+      return_value_if_fail(addr != NULL, NULL);
+      memcpy(addr, ptr, pool16->block_size);
+      mem_pool_put(pool16, ptr);
+      return addr;
     }
   }
 
-  if (ptr != NULL && mem_pool_get_index(pool16, ptr) >= 0) {
-    if (size <= 16) {
-      return ptr;
-    } else {
-      mem_pool_put(pool16, ptr);
-      ptr = NULL;
-    }
-  }
 
   if (ptr != NULL && mem_pool_get_index(pool32, ptr) >= 0) {
-    if (size <= 32) {
+    if (size <= pool32->block_size) {
       return ptr;
     } else {
+      addr = mem_allocator_pool_alloc(allocator, size, func, line);
+      return_value_if_fail(addr != NULL, NULL);
+      memcpy(addr, ptr, pool32->block_size);
       mem_pool_put(pool32, ptr);
-      ptr = NULL;
+      return addr;
     }
   }
 
   if (ptr != NULL && mem_pool_get_index(pool48, ptr) >= 0) {
-    if (size <= 48) {
+    if (size <= pool48->block_size) {
       return ptr;
     } else {
+      addr = mem_allocator_pool_alloc(allocator, size, func, line);
+      return_value_if_fail(addr != NULL, NULL);
+      memcpy(addr, ptr, pool48->block_size);
       mem_pool_put(pool48, ptr);
-      ptr = NULL;
+      return addr;
+    }
+  }
+  
+  if (ptr != NULL && mem_pool_get_index(pool64, ptr) >= 0) {
+    if (size <= pool64->block_size) {
+      return ptr;
+    } else {
+      addr = mem_allocator_pool_alloc(allocator, size, func, line);
+      return_value_if_fail(addr != NULL, NULL);
+      memcpy(addr, ptr, pool64->block_size);
+      mem_pool_put(pool64, ptr);
+      return addr;
     }
   }
 
-  if (ptr != NULL && mem_pool_get_index(pool64, ptr) >= 0) {
-    if (size <= 64) {
-      return ptr;
-    } else {
-      mem_pool_put(pool64, ptr);
-      ptr = NULL;
-    }
-  }
 
   if (ptr != NULL) {
     addr = mem_allocator_realloc(impl, ptr, size, func, line);
