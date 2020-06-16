@@ -32,7 +32,7 @@ typedef struct _mem_allocator_t mem_allocator_t;
 typedef void* (*mem_allocator_alloc_t)(mem_allocator_t* allocator, uint32_t size, const char* func, uint32_t line);
 typedef void* (*mem_allocator_calloc_t)(mem_allocator_t* allocator, uint32_t nmemb, uint32_t size, const char* func, uint32_t line);
 typedef void* (*mem_allocator_realloc_t)(mem_allocator_t* allocator, void* ptr, uint32_t size, const char* func, uint32_t line);
-typedef void (*mem_allocator_free_t)(mem_allocator_t* allocator, void* ptr, const char* func, uint32_t line);
+typedef void (*mem_allocator_free_t)(mem_allocator_t* allocator, void* ptr);
 typedef ret_t (*mem_allocator_dump_t)(mem_allocator_t* allocator);
 typedef ret_t (*mem_allocator_destroy_t)(mem_allocator_t* allocator);
 
@@ -113,15 +113,13 @@ static inline void* mem_allocator_realloc(mem_allocator_t* allocator, void* ptr,
  *
  * @param {mem_allocator_t*} allocator allocator对象。
  * @param {void*} ptr 内存的地址。
- * @param {const char*} 分配内存的函数。
- * @param {uint32_t} line 分配内存的行数。
  *
  * @return {void*} 成功返回内存块的地址，失败返回NULL。
  */
-static inline void mem_allocator_free(mem_allocator_t* allocator, void* ptr, const char* func, uint32_t line) {
+static inline void mem_allocator_free(mem_allocator_t* allocator, void* ptr) {
   return_if_fail(allocator != NULL && allocator->vt != NULL && allocator->vt->free != NULL);
 
-  allocator->vt->free(allocator, ptr, func, line);
+  allocator->vt->free(allocator, ptr);
 }
 
 /**

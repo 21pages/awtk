@@ -23,6 +23,10 @@
 #include "tkc/time_now.h"
 #include "tkc/mem_allocator_oom.h"
 
+#ifdef ENABLE_MEM_LEAK_CHECK
+#include "tkc/mem_allocator_debug.h"
+#endif/*ENABLE_MEM_LEAK_CHECK*/
+
 static mem_allocator_t* s_allocator = NULL;
 
 #define MAX_BLOCK_SIZE 0xffff0000
@@ -37,16 +41,24 @@ static mem_allocator_t* mem_allocator_get(void) {
 
   s_allocator = mem_allocator_std_create();
   s_allocator = mem_allocator_oom_create(s_allocator);
+#ifdef ENABLE_MEM_LEAK_CHECK
+  s_allocator = mem_allocator_debug_create(s_allocator);
+#endif/*ENABLE_MEM_LEAK_CHECK*/
 
   return s_allocator;
 }
 
 #else /*non std memory manager*/
+#include "tkc/mem_allocator_lock.h"
 #include "tkc/mem_allocator_simple.h"
 
 ret_t tk_mem_init(void* buffer, uint32_t size) {
   s_allocator = mem_allocator_simple_create(buffer, size);
   s_allocator = mem_allocator_oom_create(s_allocator);
+  s_allocator = mem_allocator_lock_create(s_allocator);
+#ifdef ENABLE_MEM_LEAK_CHECK
+  s_allocator = mem_allocator_debug_create(s_allocator);
+#endif/*ENABLE_MEM_LEAK_CHECK*/
 
   return s_allocator != NULL ? RET_OK : RET_FAIL;
 }

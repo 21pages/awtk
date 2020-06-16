@@ -105,10 +105,10 @@ static inline void* mem_allocator_oom_realloc(mem_allocator_t* allocator, void* 
   return addr;
 }
 
-static inline void mem_allocator_oom_free(mem_allocator_t* allocator, void* ptr, const char* func, uint32_t line) {
+static inline void mem_allocator_oom_free(mem_allocator_t* allocator, void* ptr) {
   mem_allocator_t* impl = MEM_ALLOCATOR_OOM(allocator)->impl;
   if (ptr != NULL) {
-    mem_allocator_free(impl, ptr, func, line);
+    mem_allocator_free(impl, ptr);
   }
 }
 

@@ -254,7 +254,7 @@ static inline void* mem_allocator_simple_realloc(mem_allocator_t* allocator, voi
   return tk_realloc_impl(allocator, ptr, size);
 }
 
-static inline void mem_allocator_simple_free(mem_allocator_t* allocator, void* ptr, const char* func, uint32_t line) {
+static inline void mem_allocator_simple_free(mem_allocator_t* allocator, void* ptr) {
   tk_free_impl(allocator, ptr);
 }
 

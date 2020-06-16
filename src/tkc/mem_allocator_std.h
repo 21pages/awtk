@@ -40,7 +40,7 @@ static inline void* mem_allocator_std_realloc(mem_allocator_t* allocator, void* 
   return realloc(ptr, size);
 }
 
-static inline void mem_allocator_std_free(mem_allocator_t* allocator, void* ptr, const char* func, uint32_t line) {
+static inline void mem_allocator_std_free(mem_allocator_t* allocator, void* ptr) {
   free(ptr);
 }
 
