@@ -1,4 +1,4 @@
-﻿/**
+/**
  * File:   mem_allocator_simple.h
  * Author: AWTK Develop Team
  * Brief:  mem_allocator_simple
@@ -256,6 +256,8 @@ static inline void mem_allocator_simple_free(mem_allocator_t* allocator, void* p
 static inline ret_t mem_allocator_simple_dump(mem_allocator_t* allocator) {
   mem_info_t* info = &(MEM_ALLOCATOR_SIMPLE(allocator)->info);
   log_debug("used: %d bytes %d blocks\n", info->used_bytes, info->used_block_nr);
+  (void)info;
+  
   return RET_OK;
 }
 

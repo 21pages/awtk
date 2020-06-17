@@ -69,7 +69,7 @@ ret_t tk_mem_init(void* buffer, uint32_t size) {
   s_allocator = mem_allocator_debug_init(&s_debug, s_allocator);
 #endif /*ENABLE_MEM_LEAK_CHECK*/
   if(size < 100 * 1024) {
-    s_allocator = mem_allocator_pool_init(&pool, s_allocator, 100, 100, 50, 50, 50);
+    s_allocator = mem_allocator_pool_init(&pool, s_allocator, 100, 100, 80, 80, 32);
   } else if(size < 1000 * 1024) {
     s_allocator = mem_allocator_pool_init(&pool, s_allocator, 500, 500, 500, 200, 200);
   } else {

@@ -1,4 +1,4 @@
-﻿/**
+/**
  * File:   mem_allocator_pool.h
  * Author: AWTK Develop Team
  * Brief:  mem_allocator_pool
@@ -225,6 +225,9 @@ static inline ret_t mem_allocator_pool_dump(mem_allocator_t* allocator) {
   log_debug("pool48: used=%u total=%u\n", pool48->used, pool48->block_nr);
   log_debug("pool64: used=%u total=%u\n", pool64->used, pool64->block_nr);
 
+  (void)used;
+  (void)block_nr;
+  
   return RET_OK;
 }
 

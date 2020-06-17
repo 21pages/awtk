@@ -128,6 +128,17 @@ void tk_free(void* ptr);
  */
 void tk_mem_dump(void);
 
+/**
+ * @method tk_mem_init
+ * 初始化内存。
+ *
+ * @param {void*} buffer 内存地址。
+ * @param {uint32_t} size 内存长度。
+ *
+ * @return {ret_t} 返回RET_OK表示成功，否则表示失败。
+ */
+ret_t tk_mem_init(void* buffer, uint32_t size);
+
 END_C_DECLS
 
 #endif /*TK_TKMEM_MANAGER_H*/
