@@ -74,7 +74,6 @@ static inline void mem_allocator_lock_free(mem_allocator_t* allocator, void* ptr
 }
 
 static inline ret_t mem_allocator_lock_dump(mem_allocator_t* allocator) {
-  void* addr = NULL;
   tk_mutex_t* mutex = MEM_ALLOCATOR_LOCK(allocator)->mutex;
   mem_allocator_t* impl = MEM_ALLOCATOR_LOCK(allocator)->impl;
 

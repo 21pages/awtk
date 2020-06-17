@@ -206,7 +206,11 @@ static inline ret_t mem_allocator_pool_dump(mem_allocator_t* allocator) {
   mem_pool_t* pool64 = MEM_ALLOCATOR_POOL(allocator)->pool64;
   mem_allocator_t* impl = MEM_ALLOCATOR_POOL(allocator)->impl;
 
+  uint32_t used = pool8->used + pool16->used + pool32->used + pool48->used + pool64->used;
+  uint32_t block_nr = pool8->block_nr + pool16->block_nr + pool32->block_nr + pool48->block_nr + pool64->block_nr;
+
   mem_allocator_dump(impl);
+  log_debug("total: used=%u total=%u\n", used, block_nr);
   log_debug("pool8: used=%u total=%u\n", pool8->used, pool8->block_nr);
   log_debug("pool16: used=%u total=%u\n", pool16->used, pool16->block_nr);
   log_debug("pool32: used=%u total=%u\n", pool32->used, pool32->block_nr);

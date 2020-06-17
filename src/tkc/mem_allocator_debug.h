@@ -191,7 +191,6 @@ static const mem_allocator_vtable_t s_mem_allocator_debug_vtable = {
 
 static inline mem_allocator_t* mem_allocator_debug_init(mem_allocator_debug_t* debug,
                                                         mem_allocator_t* impl) {
-  static mem_allocator_debug_t s_mem_allocator;
   mem_allocator_t* allocator = MEM_ALLOCATOR(debug);
   return_value_if_fail(impl != NULL && debug != NULL, NULL);
 

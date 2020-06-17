@@ -194,8 +194,6 @@ static void tk_free_impl(mem_allocator_t* allocator, void* ptr) {
 
 static void* tk_realloc_impl(mem_allocator_t* allocator, void* ptr, uint32_t size) {
   void* new_ptr = NULL;
-  mem_info_t* info = &(MEM_ALLOCATOR_SIMPLE(allocator)->info);
-
   if (ptr != NULL) {
     uint32_t old_size = *(uint32_t*)((char*)ptr - sizeof(uint32_t)) - sizeof(uint32_t);
     if (old_size >= size && old_size <= (size + MIN_SIZE)) {
