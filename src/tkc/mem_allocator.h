@@ -59,9 +59,9 @@ struct _mem_allocator_t {
  * 分配指定大小的内存。
  *
  * @param {mem_allocator_t*} allocator allocator对象。
- * @param {uint32_t} size 要内存的大小。
- * @param {const char*} 分配内存的函数。
- * @param {uint32_t} line 分配内存的行数。
+ * @param {uint32_t} size 内存的大小。
+ * @param {const char*}  分配内存的函数(用于调试)。
+ * @param {uint32_t} line 分配内存的行数(用于调试)。
  *
  * @return {void*} 成功返回内存块的地址，失败返回NULL。
  */
@@ -79,9 +79,9 @@ static inline void* mem_allocator_alloc(mem_allocator_t* allocator, uint32_t siz
  *
  * @param {mem_allocator_t*} allocator allocator对象。
  * @param {void*} ptr 原来内存的地址。
- * @param {uint32_t} size 要内存的大小。
- * @param {const char*} 分配内存的函数。
- * @param {uint32_t} line 分配内存的行数。
+ * @param {uint32_t} size 内存的大小。
+ * @param {const char*} 分配内存的函数(用于调试)。
+ * @param {uint32_t} line 分配内存的行数(用于调试)。
  *
  * @return {void*} 成功返回内存块的地址，失败返回NULL。
  */

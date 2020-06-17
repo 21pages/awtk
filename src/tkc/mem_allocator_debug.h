@@ -26,6 +26,13 @@
 
 BEGIN_C_DECLS
 
+/**
+ * @class mem_allocator_debug_t 
+ * @parent mem_allocator_t 
+ * 
+ * 对现有的allocator进行包装，记录分配的内存，用于帮助分析内存的使用和泄露。
+ * 
+ */
 typedef struct _mem_allocator_debug_t {
   mem_allocator_t allocator;
   mem_allocator_t* impl;
@@ -119,7 +126,8 @@ static inline void mem_entry_dump(void) {
       } else if (iter->size >= 102400) {
         geq102400++;
       }
-      log_debug("%p %u %s:%u\n", iter->addr, iter->size, iter->func, iter->line);
+
+      log_debug("[%d] %p %u %s:%u\n", i, iter->addr, iter->size, iter->func, iter->line);
     }
   }
 
@@ -169,7 +177,10 @@ static inline void mem_allocator_debug_free(mem_allocator_t* allocator, void* pt
 }
 
 static inline ret_t mem_allocator_debug_dump(mem_allocator_t* allocator) {
+  mem_allocator_t* impl = MEM_ALLOCATOR_DEBUG(allocator)->impl;
+
   mem_entry_dump();
+  mem_allocator_dump(impl);
 
   return RET_OK;
 }

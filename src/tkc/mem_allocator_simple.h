@@ -40,6 +40,13 @@ typedef struct _mem_info_t {
   free_node_t* free_list;
 } mem_info_t;
 
+/**
+ * @class mem_allocator_simple_t 
+ * @parent mem_allocator_t 
+ * 
+ * 简单的内存分配器。 
+ * 
+ */
 typedef struct _mem_allocator_simple_t {
   mem_allocator_t allocator;
   mem_info_t info;

@@ -26,7 +26,13 @@
 
 BEGIN_C_DECLS
 
-#define MEM_ALLOCATOR_STD(allocator) ((mem_allocator_std_t*)(allocator))
+/**
+ * @class mem_allocator_std_t 
+ * @parent mem_allocator_t 
+ * @annotation ["fake"]
+ * 将标准的C的内存分配函数包装成内存分配器。 
+ * 
+ */
 
 static inline void* mem_allocator_std_alloc(mem_allocator_t* allocator, uint32_t size,
                                             const char* func, uint32_t line) {

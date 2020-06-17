@@ -27,6 +27,14 @@
 
 BEGIN_C_DECLS
 
+/**
+ * @class mem_allocator_pool_t 
+ * @parent mem_allocator_t 
+ * 
+ * 对现有的allocator进行包装，预先分配一部分内存，用于分配小块内存，可以避免内存碎片。
+ * 
+ */
+
 typedef struct _mem_allocator_pool_t {
   mem_allocator_t allocator;
   mem_allocator_t* impl;

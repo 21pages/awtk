@@ -27,6 +27,13 @@
 
 BEGIN_C_DECLS
 
+/**
+ * @class mem_allocator_lock_t 
+ * @parent mem_allocator_t 
+ * 
+ * 对现有的allocator进行包装，提供互斥功能。
+ * 
+ */
 typedef struct _mem_allocator_lock_t {
   mem_allocator_t allocator;
   mem_allocator_t* impl;
