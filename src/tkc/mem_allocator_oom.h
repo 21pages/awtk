@@ -38,7 +38,8 @@ typedef struct _mem_allocator_oom_t {
 static void* s_on_out_of_memory_ctx;
 static tk_mem_on_out_of_memory_t s_on_out_of_memory;
 
-static ret_t tk_mem_on_out_of_memory(uint32_t tried_times, uint32_t need_size) {
+static ret_t tk_mem_on_out_of_memory(uint32_t tried_times, uint32_t need_size, const char* func, uint32_t line) {
+  log_debug("%s:%u times=%u size=%u\n", func, line, tried_times, need_size);
   if (s_on_out_of_memory != NULL) {
     return s_on_out_of_memory(s_on_out_of_memory_ctx, tried_times, need_size);
   }
@@ -65,7 +66,7 @@ static inline void* mem_allocator_oom_alloc(mem_allocator_t* allocator, uint32_t
       break;
     }
 
-    tk_mem_on_out_of_memory(++tried_times, size);
+    tk_mem_on_out_of_memory(++tried_times, size, func, line);
   } while (tried_times < TRY_MAX_TIMES);
 
   return addr;
@@ -83,7 +84,7 @@ static inline void* mem_allocator_oom_realloc(mem_allocator_t* allocator, void* 
       break;
     }
 
-    tk_mem_on_out_of_memory(++tried_times, size);
+    tk_mem_on_out_of_memory(++tried_times, size, func, line);
   } while (tried_times < TRY_MAX_TIMES);
 
   return addr;

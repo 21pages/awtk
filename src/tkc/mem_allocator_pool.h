@@ -210,6 +210,8 @@ static inline ret_t mem_allocator_pool_dump(mem_allocator_t* allocator) {
   log_debug("pool8: used=%u total=%u\n", pool8->used, pool8->block_nr);
   log_debug("pool16: used=%u total=%u\n", pool16->used, pool16->block_nr);
   log_debug("pool32: used=%u total=%u\n", pool32->used, pool32->block_nr);
+  log_debug("pool48: used=%u total=%u\n", pool48->used, pool48->block_nr);
+  log_debug("pool64: used=%u total=%u\n", pool64->used, pool64->block_nr);
 
   return RET_OK;
 }
