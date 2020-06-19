@@ -492,28 +492,56 @@ static ret_t edit_on_key_down(widget_t* widget, key_event_t* e) {
   if (edit_pre_input(widget, key) == RET_STOP) {
     return RET_STOP;
   }
+  if (!edit_is_number(widget)) {
+    if(!edit->in_edit) {
+      if (e->key != TK_KEY_RETURN) {
+        return RET_OK;
+    } else {
+      edit->in_edit = 1;
+      text_edit_set_cursor(edit->model, edit->widget.text.size);
+    }
+  } else {
+    if(key == TK_KEY_LEFT) {
+      text_edit_set_cursor(edit->model, 0);
+    }
+  }
+  } else {
+    if(key == TK_KEY_LEFT) {
+      text_edit_set_cursor(edit->model, 0);
+    } else if(key == TK_KEY_RIGHT) {
+      text_edit_set_cursor(edit->model, widget->text.size);
+    }
+  }
 
   if (key == TK_KEY_TAB) {
     return RET_OK;
   } else if (key == TK_KEY_LEFT || key == TK_KEY_RIGHT) {
     uint32_t cursor = text_edit_get_cursor(edit->model);
     if (key == TK_KEY_LEFT && cursor == 0) {
+      edit->in_edit = 0;
       return RET_OK;
     }
 
     if (key == TK_KEY_RIGHT && cursor == widget->text.size) {
+      edit->in_edit = 0;
       return RET_OK;
     }
 
   } else if (key == TK_KEY_DOWN) {
-    if (edit_is_number(widget) || edit->inc_value != NULL) {
+    if (!edit_is_number(widget)) {
+      widget_focus_next(widget);
+      edit->in_edit = 0;
+    } else if (edit_is_number(widget) || edit->inc_value != NULL) {
       edit_dec(edit);
     } else {
       widget_focus_next(widget);
     }
     return RET_STOP;
   } else if (key == TK_KEY_UP) {
-    if (edit_is_number(widget) || edit->inc_value != NULL) {
+    if (!edit_is_number(widget)) {
+      widget_focus_prev(widget);
+      edit->in_edit = 0;
+    } else if (edit_is_number(widget) || edit->inc_value != NULL) {
       edit_inc(edit);
     } else {
       widget_focus_prev(widget);

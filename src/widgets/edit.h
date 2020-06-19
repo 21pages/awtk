@@ -221,6 +221,8 @@ typedef struct _edit_t {
    */
   double step;
 
+  bool_t in_edit;
+
   /*private*/
   uint32_t idle_id;
   uint32_t timer_id;
