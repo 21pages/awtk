@@ -31,7 +31,7 @@
 #include "font_loader/font_loader_bitmap.h"
 
 #define MAX_CHARS 100 * 1024
-#define MAX_BUFF_SIZE 1 * 1024 * 1024
+#define MAX_BUFF_SIZE 2 * 1024 * 1024
 
 static int char_cmp(const void* a, const void* b) {
   wchar_t c1 = *(wchar_t*)a;
@@ -68,6 +68,8 @@ uint32_t font_gen_buff(font_t* font, uint16_t font_size, const char* str, uint8_
   qsort(wstr, size, sizeof(wchar_t), char_cmp);
   size = unique(wstr, size);
 
+  header->format = 0;
+  header->version = 0x0101;
   header->char_nr = size;
   header->font_size = (uint8_t)font_size;
   header->ascent = vmetrics.ascent;
@@ -82,6 +84,7 @@ uint32_t font_gen_buff(font_t* font, uint16_t font_size, const char* str, uint8_
     font_bitmap_index_t* iter = header->index + i;
 
     iter->c = c;
+    iter->unused = 0;
     iter->offset = p - output_buff;
 
     if (iswspace(c)) {
