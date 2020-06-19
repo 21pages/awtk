@@ -332,6 +332,16 @@ ret_t lcd_resize(lcd_t* lcd, wh_t w, wh_t h, uint32_t line_length);
  */
 ret_t lcd_set_global_alpha(lcd_t* lcd, uint8_t alpha);
 
+/*
+ * @method lcd_get_text_color
+ * 获取文本颜色。
+ * @param {lcd_t*} lcd lcd对象。
+ * @param {color_t*} color 颜色。
+ *
+ * @return {ret_t} 返回RET_OK表示成功，否则表示失败。
+ */
+ret_t lcd_get_text_color(lcd_t* lcd, color_t* color);
+
 /**
  * @method lcd_set_text_color
  * 设置文本颜色。
@@ -351,6 +361,16 @@ ret_t lcd_set_text_color(lcd_t* lcd, color_t color);
  * @return {ret_t} 返回RET_OK表示成功，否则表示失败。
  */
 ret_t lcd_set_stroke_color(lcd_t* lcd, color_t color);
+
+/**
+ * @method lcd_get_fill_color
+ * 获取填充颜色。
+ * @param {lcd_t*} lcd lcd对象。
+ * @param {color_t*} color 颜色。
+ *
+ * @return {ret_t} 返回RET_OK表示成功，否则表示失败。
+ */
+ret_t lcd_get_fill_color(lcd_t* lcd, color_t* color);
 
 /**
  * @method lcd_set_fill_color

@@ -57,5 +57,6 @@
 #include "widgets/tab_control.h"
 #include "widgets/view.h"
 #include "widgets/digit_clock.h"
+#include "widgets/edit_num.h"
 
 #endif /*AWTK_WIDGETS_H*/

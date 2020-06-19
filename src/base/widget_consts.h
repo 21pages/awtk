@@ -1171,6 +1171,12 @@ BEGIN_C_DECLS
 #define WIDGET_TYPE_CALIBRATION_WIN "calibration_win"
 
 /**
+ * @const WIDGET_TYPE_EDIT_NUM
+ * 编辑数字控件。
+ */
+#define WIDGET_TYPE_EDIT_NUM "edit_num"
+
+/**
  * @enum window_stage_t
  * @annotation ["scriptable"]
  * @prefix WINDOW_STAGE_

@@ -63,6 +63,14 @@ ret_t lcd_set_global_alpha(lcd_t* lcd, uint8_t alpha) {
   return RET_OK;
 }
 
+ret_t lcd_get_text_color(lcd_t* lcd, color_t* color) {
+  return_value_if_fail(lcd != NULL, RET_BAD_PARAMS);
+  return_value_if_fail(color != NULL, RET_BAD_PARAMS);
+
+  *color = lcd->text_color;
+  return RET_OK;
+}
+
 ret_t lcd_set_text_color(lcd_t* lcd, color_t color) {
   return_value_if_fail(lcd != NULL, RET_BAD_PARAMS);
 
@@ -82,6 +90,14 @@ ret_t lcd_set_stroke_color(lcd_t* lcd, color_t color) {
     lcd->set_stroke_color(lcd, color);
   }
 
+  return RET_OK;
+}
+
+ret_t lcd_get_fill_color(lcd_t* lcd, color_t* color) {
+  return_value_if_fail(lcd != NULL, RET_BAD_PARAMS);
+  return_value_if_fail(color != NULL, RET_BAD_PARAMS);
+
+  *color = lcd->fill_color;
   return RET_OK;
 }
 

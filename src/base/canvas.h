@@ -236,6 +236,17 @@ ret_t canvas_set_clip_rect(canvas_t* c, const rect_t* r);
 ret_t canvas_set_clip_rect_ex(canvas_t* c, const rect_t* r, bool_t translate);
 
 /**
+ * @method canvas_get_fill_color
+ * 获取填充颜色。
+ *
+ * @param {canvas_t*} c canvas对象。
+ * @param {color_t*} color 颜色。
+ *
+ * @return {ret_t} 返回RET_OK表示成功，否则表示失败。
+ */
+ret_t canvas_get_fill_color(canvas_t* c, color_t* color);
+
+/**
  * @method canvas_set_fill_color
  * 设置填充颜色。
  *
@@ -245,6 +256,17 @@ ret_t canvas_set_clip_rect_ex(canvas_t* c, const rect_t* r, bool_t translate);
  * @return {ret_t} 返回RET_OK表示成功，否则表示失败。
  */
 ret_t canvas_set_fill_color(canvas_t* c, color_t color);
+
+/**
+ * @method canvas_get_text_color
+ * 获取文本颜色。
+ *
+ * @param {canvas_t*} c canvas对象。
+ * @param {color_t*} color 颜色。
+ *
+ * @return {ret_t} 返回RET_OK表示成功，否则表示失败。
+ */
+ret_t canvas_get_text_color(canvas_t* c, color_t* color);
 
 /**
  * @method canvas_set_text_color

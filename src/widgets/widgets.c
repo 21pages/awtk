@@ -57,6 +57,7 @@
 #include "widgets/tab_button_group.h"
 #include "widgets/spin_box.h"
 #include "widgets/digit_clock.h"
+#include "widgets/edit_num.h"
 #endif /*AWTK_LITE*/
 #endif /*AWTK_NOGUI*/
 
@@ -100,6 +101,7 @@ ret_t tk_widgets_init(void) {
   widget_factory_register(f, WIDGET_TYPE_COLUMN, column_create);
   widget_factory_register(f, WIDGET_TYPE_APP_BAR, app_bar_create);
   widget_factory_register(f, WIDGET_TYPE_DIGIT_CLOCK, digit_clock_create);
+  widget_factory_register(f, WIDGET_TYPE_EDIT_NUM, edit_num_create);
 #endif /*AWTK_LITE*/
 #endif /**AWTK_NOGUI*/
   return RET_OK;

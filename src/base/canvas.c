@@ -223,12 +223,24 @@ ret_t canvas_set_clip_rect_ex(canvas_t* c, const rect_t* r_in, bool_t translate)
   }
 }
 
+ret_t canvas_get_fill_color(canvas_t* c, color_t* color) {
+  return_value_if_fail(c != NULL, RET_BAD_PARAMS);
+
+  return lcd_get_fill_color(c->lcd, color);
+}
+
 ret_t canvas_set_fill_color(canvas_t* c, color_t color) {
   return_value_if_fail(c != NULL, RET_BAD_PARAMS);
 
   lcd_set_fill_color(c->lcd, color);
 
   return RET_OK;
+}
+
+ret_t canvas_get_text_color(canvas_t* c, color_t* color) {
+  return_value_if_fail(c != NULL, RET_BAD_PARAMS);
+
+  return lcd_get_text_color(c->lcd, color);
 }
 
 ret_t canvas_set_text_color(canvas_t* c, color_t color) {
