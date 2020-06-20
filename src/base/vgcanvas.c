@@ -83,7 +83,10 @@ ret_t vgcanvas_translate(vgcanvas_t* vg, float_t x, float_t y) {
 }
 
 ret_t vgcanvas_clip_rect(vgcanvas_t* vg, float_t x, float_t y, float_t w, float_t h) {
-  return_value_if_fail(vg != NULL && vg->vt->clip_rect != NULL, RET_BAD_PARAMS);
+  //return_value_if_fail(vg != NULL && vg->vt->clip_rect != NULL, RET_BAD_PARAMS);
+  if(!(vg != NULL && vg->vt->clip_rect != NULL)) {
+    return RET_BAD_PARAMS;
+  }
 
   fix_xywh(x, y, w, h);
   vg->clip_rect.x = x;
