@@ -1544,6 +1544,7 @@ widget_t* edit_create_ex(widget_t* parent, const widget_vtable_t* vt, xy_t x, xy
   edit->top_margin = 2;
   edit->bottom_margin = 2;
   edit->open_im_when_focused = TRUE;
+  edit->in_edit = FALSE;
   edit_set_text_limit(widget, 0, 1024);
 
   edit_update_status(widget);
